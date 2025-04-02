@@ -22,8 +22,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import styles from "./styles";
+import { useNavigation } from '@react-navigation/native';
 
-const PetProfileScreen = ({ route }) => {
+const PetProfileScreen = ({ navigation,route }) => {
   const petId = "cat 1";
   const [pet, setPet] = useState(null);
   const [mealPlan, setMealPlan] = useState(null);
@@ -228,6 +229,18 @@ const PetProfileScreen = ({ route }) => {
         ) : (
           <Text style={styles.label}>Age: {pet.age} years</Text>
         )}
+            
+          {/* Navigating to Meal Plan Screen */}
+          <TouchableOpacity 
+            onPress={() => {
+              // Navigate to Meal Plan and pass petId
+              navigation.navigate("MealPlan", {
+                petId: petId,
+              });
+            }}>
+            <Text style={styles.addButton}>Create Meal Plan!!!</Text>
+          </TouchableOpacity>
+   
       </View>
       <View style={styles.headerContainer}>
     <Text style={styles.headerText}>Health Details</Text>
