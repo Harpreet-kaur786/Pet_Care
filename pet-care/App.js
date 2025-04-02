@@ -11,7 +11,7 @@ export default function App() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="PetProfile">
                 <Stack.Screen name="PetProfile" component={PetProfileScreen} initialParams={{ petId: 'Cat 1' }} />
-                <Stack.Screen name="MealPlan" component={MealPlanScreen} />
+                <Stack.Screen name="MealPlan" component={MealPlanScreen} initialParams={{ petId: 'Cat 1' }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
