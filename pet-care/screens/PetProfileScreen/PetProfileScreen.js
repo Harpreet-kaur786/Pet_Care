@@ -25,7 +25,7 @@ import styles from "./styles";
 import { useNavigation } from '@react-navigation/native';
 
 const PetProfileScreen = ({ navigation,route }) => {
-  const petId = "cat 1";
+  const petId = "L441RCz5Z55RXFJpT3gv";
   const [pet, setPet] = useState(null);
   const [mealPlan, setMealPlan] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -48,7 +48,7 @@ const PetProfileScreen = ({ navigation,route }) => {
   {/* Fetching the Pet Profile */}
   const fetchPetProfile = async () => {
     try {
-      const petDocRef = doc(db, "categories", "cat", "catList", petId);
+      const petDocRef = doc(db, "pets", petId);
       const petSnapshot = await getDoc(petDocRef);
 
       if (petSnapshot.exists()) {
@@ -97,7 +97,7 @@ const PetProfileScreen = ({ navigation,route }) => {
 
   const handleUpdate = async () => {
     try {
-      const petDocRef = doc(db, "categories", "cat", "catList", petId);
+      const petDocRef = doc(db, "pets", petId);
       await updateDoc(petDocRef, updatedPet);
       setPet(updatedPet);
       setIsEditing(false);
@@ -110,7 +110,7 @@ const PetProfileScreen = ({ navigation,route }) => {
   {/* Adding the appointments */}
   const handleAddAppointment = async () => {
     try {
-      const petDocRef = doc(db, "categories", "cat", "catList", petId);
+      const petDocRef = doc(db, "pets", petId);
       const updatedAppointments = [...pet.appointments, newAppointment];
       await updateDoc(petDocRef, { appointments: updatedAppointments });
       setPet({ ...pet, appointments: updatedAppointments });
@@ -126,7 +126,7 @@ const PetProfileScreen = ({ navigation,route }) => {
   {/* Adding the medications */}
   const handleAddMedication = async () => {
     try {
-      const petDocRef = doc(db, "categories", "cat", "catList", petId);
+      const petDocRef = doc(db, "pets", petId);
       const updatedMedications = [...pet.medications, newMedication];
       await updateDoc(petDocRef, { medications: updatedMedications });
       setPet({ ...pet, medications: updatedMedications });
@@ -142,7 +142,7 @@ const PetProfileScreen = ({ navigation,route }) => {
   {/* Adding the vaccinations */}
   const handleAddVaccination = async () => {
     try {
-      const petDocRef = doc(db, "categories", "cat", "catList", petId);
+      const petDocRef = doc(db, "pets", petId);
       const updatedVaccinations = [...pet.vaccinations, newVaccination];
       await updateDoc(petDocRef, { vaccinations: updatedVaccinations });
       setPet({ ...pet, vaccinations: updatedVaccinations });
@@ -170,7 +170,7 @@ const PetProfileScreen = ({ navigation,route }) => {
   {/* Deleting the items */}
   const deleteItem = async (type, index) => {
     try {
-      const petDocRef = doc(db, "categories", "cat", "catList", petId);
+      const petDocRef = doc(db, "pets", petId);
       let updatedList = [];
 
       if (type === "appointments") {
@@ -207,13 +207,13 @@ const PetProfileScreen = ({ navigation,route }) => {
         {isEditing ? (
           <TextInput
             style={styles.input}
-            value={updatedPet.name}
+            value={updatedPet.petName}
             onChangeText={(text) =>
               setUpdatedPet({ ...updatedPet, name: text })
             }
           />
         ) : (
-          <Text style={styles.name}>{pet.name}</Text>
+          <Text style={styles.name}>{pet.petName}</Text>
         )}
 
         {isEditing ? (
