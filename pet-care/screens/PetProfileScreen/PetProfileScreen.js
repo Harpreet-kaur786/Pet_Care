@@ -236,12 +236,10 @@ const PetProfileScreen = ({ navigation,route }) => {
           style={styles.mealplanButton}
             onPress={() => {
               // Navigate to Meal Plan and pass petId
-              navigation.navigate("MealPlan", {
-                petId: petId,
-              });
+              navigation.navigate('MealPlan', { petId, petName: pet?.petName, age: pet?.age });
             }}>
             {/* <Text style={styles.addButton}>Create Meal Plan</Text> */}
-            <Text style={styles.mealplanButtonText}>Create Meal Plan</Text>
+            <Text style={styles.mealplanButtonText}>Make Meal Plan</Text>
           </TouchableOpacity>
 
                     {/* Navigating to Meal Plan Screen */}
@@ -249,12 +247,10 @@ const PetProfileScreen = ({ navigation,route }) => {
                     style={styles.mealplanButton}
             onPress={() => {
               // Navigate to Meal Plan and pass petId
-              navigation.navigate("DailyMealPlan", {
-                petId: petId,
-              });
+              navigation.navigate('DailyMealPlan', { petId, petName: pet?.petName, age: pet?.age });
             }}>
             {/* <Text style={styles.addButton}>Check Daily Meal Plan</Text> */}
-            <Text style={styles.mealplanButtonText}>Check Daily Meal Plan</Text>
+            <Text style={styles.mealplanButtonText}>Check Daily Meal</Text>
           </TouchableOpacity>
           </View>
    

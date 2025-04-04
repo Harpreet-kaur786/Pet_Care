@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import PetProfileScreen from './screens/PetProfileScreen/PetProfileScreen';
-import MealPlanScreen from './screens/MealPlanScreen/MealPlanScreen';
-import DailyMealPlanScreen from './screens/MealPlanScreen/DailyMealPlan';
+import MealPlanScreen from './screens/MealPlanScreen';
+import DailyMealPlanScreen from './screens/DailyMealPlanScreen';
 
 const Stack = createStackNavigator();
 
