@@ -230,7 +230,7 @@ const PetProfileScreen = ({ navigation,route }) => {
           <Text style={styles.label}>Age: {pet.age} years</Text>
         )}
             
-          {/* Navigating to Meal Plan Screen */}
+          {/* Navigating to Meal Plan and Daily Meal Plan Screen */}
           <View style={styles.mealplanButtonRow}>
           <TouchableOpacity 
           style={styles.mealplanButton}
@@ -249,7 +249,7 @@ const PetProfileScreen = ({ navigation,route }) => {
                     style={styles.mealplanButton}
             onPress={() => {
               // Navigate to Meal Plan and pass petId
-              navigation.navigate("MealPlan", {
+              navigation.navigate("DailyMealPlan", {
                 petId: petId,
               });
             }}>
