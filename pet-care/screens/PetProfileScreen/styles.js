@@ -125,6 +125,28 @@ const styles = StyleSheet.create({
       borderBottomColor: '#ccc',
       marginTop: 10,
   },
+  mealplanButton: {
+    //backgroundColor: "#3b8132", // Green color
+    backgroundColor: "#2196F3", //Blue color
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginHorizontal: 5, // Add spacing between buttons
+    flex: 1, // Makes both buttons take equal width
+  },
+  mealplanButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  mealplanButtonRow: {
+    flexDirection: "row",
+    justifyContent: "space-between", // Adjust spacing
+    alignItems: "center",
+    marginTop: 10,
+  },
   });
 
   export default styles;

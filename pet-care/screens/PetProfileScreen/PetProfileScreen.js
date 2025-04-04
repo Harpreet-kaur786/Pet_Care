@@ -231,15 +231,32 @@ const PetProfileScreen = ({ navigation,route }) => {
         )}
             
           {/* Navigating to Meal Plan Screen */}
+          <View style={styles.mealplanButtonRow}>
           <TouchableOpacity 
+          style={styles.mealplanButton}
             onPress={() => {
               // Navigate to Meal Plan and pass petId
               navigation.navigate("MealPlan", {
                 petId: petId,
               });
             }}>
-            <Text style={styles.addButton}>Create Meal Plan!!!</Text>
+            {/* <Text style={styles.addButton}>Create Meal Plan</Text> */}
+            <Text style={styles.mealplanButtonText}>Create Meal Plan</Text>
           </TouchableOpacity>
+
+                    {/* Navigating to Meal Plan Screen */}
+                    <TouchableOpacity 
+                    style={styles.mealplanButton}
+            onPress={() => {
+              // Navigate to Meal Plan and pass petId
+              navigation.navigate("MealPlan", {
+                petId: petId,
+              });
+            }}>
+            {/* <Text style={styles.addButton}>Check Daily Meal Plan</Text> */}
+            <Text style={styles.mealplanButtonText}>Check Daily Meal Plan</Text>
+          </TouchableOpacity>
+          </View>
    
       </View>
       <View style={styles.headerContainer}>
