@@ -1,13 +1,14 @@
-
-
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity ,Modal, TextInput} from 'react-native';
 import { Text, Avatar, Card, IconButton, Button, Divider } from 'react-native-paper';
 import { auth, db, collection, getDocs, signOut } from '../../firebaseConfig';
 
 export default function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [petData, setPetData] = useState([]);
+   // State for modal visibility and feedback input
+   const [isModalVisible, setIsModalVisible] = useState(false);
+   const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,7 +36,6 @@ export default function HomeScreen({ navigation }) {
     };
     fetchUserData();
     fetchPetData();
-  
   }, []);
 
   // Logout Function
@@ -66,8 +66,33 @@ export default function HomeScreen({ navigation }) {
       imageUrl: require('../../assets/pet3.jpg'),
       screen: "WellnessPreventive"
     }
-  ]
- 
+  ];
+
+  // Function to return the correct image based on pet breed
+  const getPetImage = (breed) => {
+    if (breed.toLowerCase() === 'cat') {
+      return require('../../assets/pet4.jpg'); // Replace with actual cat image path
+    } else if (breed.toLowerCase() === 'dog') {
+      return require('../../assets/pet.jpg'); // Replace with actual dog image path
+    }
+    return require('../../assets/pet3.jpg'); // Default image for other breeds
+  };
+   // Open/Close Modal
+   const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  // Handle feedback submission
+  const handleFeedbackSubmit = () => {
+    if (feedback) {
+      console.log('Feedback Submitted:', feedback);
+      setFeedback(''); // Reset feedback input
+      toggleModal(); // Close the modal
+    } else {
+      alert('Please enter some feedback before submitting!');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
@@ -92,12 +117,17 @@ export default function HomeScreen({ navigation }) {
 
       {petData.length > 0 ? (
         petData.map((pet, index) => (
-            <Card 
+          <Card 
             key={index} 
             style={styles.petCard}
             onPress={() => navigation.navigate('PetProfile', { petId: pet.id })}
           >
             <Card.Content>
+              {/* Conditionally Render Pet Image Based on Breed */}
+              <Image 
+                source={getPetImage(pet.breed)} 
+                style={styles.petImage}
+              />
               <Text style={styles.petName}>{pet.petName}</Text>
               <Text style={styles.petDetails}>Breed: {pet.breed}</Text>
               <Text style={styles.petDetails}>Age: {pet.age} yrs</Text>
@@ -119,134 +149,217 @@ export default function HomeScreen({ navigation }) {
 
       <Divider style={{ marginVertical: 30, width: '100%' }} />
       <Text style={styles.sectionTitle}>Services for Your Pets</Text>
-<FlatList
-  data={services}
-  keyExtractor={(item, index) => index.toString()}
-  horizontal
-  showsHorizontalScrollIndicator={false}
-  renderItem={({ item }) => (
-    <TouchableOpacity 
-      style={styles.serviceCard}
-      onPress={() => item.screen && navigation.navigate(item.screen)}
-    >
-      <Text style={styles.serviceText}>{item.title}</Text>
-    </TouchableOpacity>
-  )}
-  contentContainerStyle={styles.categoryList}
-/>
 
+      <FlatList
+        data={services}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <TouchableOpacity 
+            style={styles.serviceCard}
+            onPress={() => item.screen && navigation.navigate(item.screen)}
+          >
+             <Image 
+              source={item.imageUrl} 
+              style={styles.serviceImage}
+            />
+            <Text style={styles.serviceText}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
+        contentContainerStyle={styles.categoryList}
+      />
+
+       {/* Creative Message */}
+       <View style={styles.feedbackMessage}>
+        <Text style={styles.feedbackTitle}>We'd love to hear from you!</Text>
+        <Text style={styles.feedbackText}>Your feedback helps us improve and serve you better. Tell us what you think about the app, your pets, or anything else!</Text>
+      </View>
+       {/* Feedback Button */}
+       <Button 
+        mode="contained" 
+        onPress={toggleModal}
+        style={styles.feedbackButton}
+        buttonColor="#FF7043"
+      >
+        Give Feedback
+      </Button>
+
+      {/* Modal for Feedback Form */}
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={toggleModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>We value your feedback!</Text>
+            <TextInput
+              placeholder="Enter your feedback here..."
+              value={feedback}
+              onChangeText={setFeedback}
+              style={styles.feedbackInput}
+              multiline
+              numberOfLines={4}
+            />
+            <Button
+              mode="contained"
+              onPress={handleFeedbackSubmit}
+              style={styles.submitButton}
+            >
+              Submit Feedback
+            </Button>
+            <Button
+              mode="text"
+              onPress={toggleModal}
+              style={styles.closeButton}
+            >
+              Close
+            </Button>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
+
+
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    alignItems: 'center',
-    paddingVertical: 30,
-    paddingHorizontal: 20,
-    backgroundColor: '#F9F9F9',
+    padding: 20,
   },
   logoutIcon: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
+    alignSelf: 'flex-end',
   },
-  
   headerSection: {
     alignItems: 'center',
-    marginTop: 40, // Increased margin for better spacing
-    marginBottom: 20, // Added margin for space between text and divider
-    paddingHorizontal: 20, // Added padding for better responsiveness
+    marginVertical: 20,
   },
-  
   avatar: {
-    marginBottom: 10, // Space between avatar and text
+    backgroundColor: '#4CAF50',
   },
-  
   welcomeText: {
-    fontSize: 22, // Larger font for better visibility
-    fontWeight: 'bold', // Bold text for emphasis
-    color: '#333', // A darker color for contrast
+    fontSize: 24,
+    fontWeight: 'bold',
   },
-  
   subText: {
     fontSize: 16,
-    color: '#666', // Subtle color for secondary text
-    textAlign: 'center', // Center the subtext for better alignment
-    marginBottom: 10, // Space below the subtext
+    color: '#555',
   },
-  
-  divider: {
-    marginVertical: 20,
-    width: '100%',
-    backgroundColor: '#E0E0E0', // Lighter color for the divider to match the theme
-  },
-  
   sectionTitle: {
     fontSize: 20,
-    fontWeight: '700',
-    alignSelf: 'flex-start',
+    fontWeight: 'bold',
     marginBottom: 10,
-    color: '#222',
   },
   petCard: {
-    width: '100%',
+    marginBottom: 20,
+    borderRadius: 10,
     backgroundColor: '#fff',
-    marginBottom: 15,
-    borderRadius: 12,
     elevation: 3,
-    padding: 10,
+  },
+  petImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 10,
   },
   petName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#3E3E3E',
+    marginTop: 10,
   },
   petDetails: {
     fontSize: 14,
     color: '#555',
-    marginTop: 2,
   },
   noPetsText: {
-    fontSize: 16,
-    color: '#999',
-    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
   },
   addPetButton: {
-    width: '100%',
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  categoryList: {
-    paddingHorizontal: 5,
-  },
-  categoryItem: {
-    backgroundColor: '#E1F5FE',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginRight: 12,
-    elevation: 2,
-  },
-  categoryText: {
-    fontSize: 16,
-    color: '#0277BD',
-    fontWeight: '600',
+    marginTop: 20,
+    paddingVertical: 10,
   },
   serviceCard: {
-    backgroundColor: '#FFF3E0',
-    paddingVertical: 15,
-    paddingHorizontal: 25,
-    borderRadius: 16,
-    marginRight: 12,
-    elevation: 2,
-    justifyContent: 'center',
+    marginRight: 20,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: '#E0F7FA',
+    width: 150,
     alignItems: 'center',
+  },
+  serviceImage: {
+    width: '100%',
+    height: 100,
+    resizeMode: 'contain',
+    borderRadius: 10,
   },
   serviceText: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#FB8C00',
+    fontWeight: 'bold',
+    marginTop: 10,
   },
-  
+  categoryList: {
+    marginTop: 20,
+  },
+  feedbackMessage: {
+    backgroundColor: '#FFEBEE',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  feedbackTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF7043',
+  },
+  feedbackText: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'center',
+  },
+  feedbackButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  feedbackInput: {
+    width: '100%',
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 20,
+    height: 100,
+  },
+  submitButton: {
+    marginTop: 10,
+    width: '100%',
+  },
+  closeButton: {
+    marginTop: 10,
+    width: '100%',
+  },
 });
+
