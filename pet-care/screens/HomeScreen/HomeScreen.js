@@ -8,7 +8,6 @@ import { auth, db, collection, getDocs, signOut } from '../../firebaseConfig';
 export default function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [petData, setPetData] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,19 +33,9 @@ export default function HomeScreen({ navigation }) {
         setPetData(pets);
       }
     };
-
-    const fetchCategories = async () => {
-      const categoriesSnapshot = await getDocs(collection(db, "categories"));
-      const categoryList = categoriesSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCategories(categoryList);
-    };
-
     fetchUserData();
     fetchPetData();
-    fetchCategories();
+  
   }, []);
 
   // Logout Function
@@ -65,11 +54,17 @@ export default function HomeScreen({ navigation }) {
     {
       title: "Vaccination",
       imageUrl: require('../../assets/pet.jpg'), 
-      screen: "Vacination"
+      screen: "Vaccination"
     },
     {
       title: "Diet & Nutrition",
       imageUrl: require('../../assets/pet2.jpg'), 
+      screen: "DietNutrition"
+    },
+    {
+      title: "Wellness & Prevention",
+      imageUrl: require('../../assets/pet3.jpg'),
+      screen: "WellnessPreventive"
     }
   ]
  
@@ -123,24 +118,6 @@ export default function HomeScreen({ navigation }) {
       </Button>
 
       <Divider style={{ marginVertical: 30, width: '100%' }} />
-
-      {/* Categories Section */}
-      <Text style={styles.sectionTitle}>Explore Categories</Text>
-      <FlatList
-        data={categories}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('SubCategory', { categoryId: item.id })}
-            style={styles.categoryItem}
-          >
-            <Text style={styles.categoryText}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-        contentContainerStyle={styles.categoryList}
-      />
       <Text style={styles.sectionTitle}>Services for Your Pets</Text>
 <FlatList
   data={services}
