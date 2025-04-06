@@ -1,97 +1,167 @@
 
-
-// import React, { useState } from 'react';
-// import { View, StyleSheet } from 'react-native';
-// import { TextInput, Button, Text } from 'react-native-paper';
-// import { auth, db, collection, addDoc } from '../../firebaseConfig';
-
-// export default function PetRegistrationScreen({ navigation }) {
-//   const [petName, setPetName] = useState('');
-//   const [breed, setBreed] = useState('');
-//   const [age, setAge] = useState('');
-
-//   const handleRegisterPet = async () => {
-//     if (auth.currentUser) {
-//       await addDoc(collection(db, "pets"), {
-//         userId: auth.currentUser.uid,
-//         petName,
-//         breed,
-//         age
-//       });
-//       navigation.navigate('Home'); // Navigate back to HomeScreen after successful registration
-//     }
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.header}>Register Your Pet</Text>
-//       <TextInput label="Pet Name" value={petName} onChangeText={setPetName} style={styles.input} />
-//       <TextInput label="Breed" value={breed} onChangeText={setBreed} style={styles.input} />
-//       <TextInput label="Age" value={age} onChangeText={setAge} style={styles.input} />
-//       <Button mode="contained" onPress={handleRegisterPet} style={styles.button}>Register</Button>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-//   header: { fontSize: 22, fontWeight: 'bold', marginBottom: 10 },
-//   input: { width: '100%', marginBottom: 10 },
-//   button: { marginTop: 10, width: '100%' }
-// });
-
-
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, Button, Text } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { TextInput, Button, Text, RadioButton, Divider } from 'react-native-paper';
 import { auth, db, collection, addDoc } from '../../firebaseConfig';
 
 export default function PetRegistrationScreen({ navigation }) {
+  // State hooks for form fields
   const [petName, setPetName] = useState('');
   const [breed, setBreed] = useState('');
   const [age, setAge] = useState('');
-  const [appointments, setAppointments] = useState('');
-  const [medications, setMedications] = useState('');
-  const [vaccinations, setVaccinations] = useState('');
-  const [mealPlan, setMealPlan] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
 
+  // Registration handler for logged-in users
   const handleRegisterPet = async () => {
-    if (auth.currentUser) {
+    const user = auth.currentUser;
+
+    if (!user) {
+      Alert.alert("Not Logged In", "You must be logged in to register a pet.");
+      return;
+    }
+
+    try {
+      // Set loading state to true while registering
+      setLoading(true);
+
+      // Add pet to the database under the logged-in user
       await addDoc(collection(db, "pets"), {
-        userId: auth.currentUser.uid,
+        userId: user.uid,
         petName,
         breed,
-        age,
-        appointments: appointments.split(',').map(item => item.trim()), // Saving appointments as an array
-        medications: medications.split(',').map(item => item.trim()), // Saving medications as an array
-        vaccinations: vaccinations.split(',').map(item => item.trim()), // Saving vaccinations as an array
-        mealPlan,
+        age: parseInt(age),
       });
-      navigation.navigate('Home'); // Navigate back to HomeScreen after successful registration
+
+      // Navigate back to the Home screen after successful registration
+      Alert.alert("Pet Registered", "Your pet has been successfully registered.");
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error("Error registering pet:", error);
+      Alert.alert("Error", "Something went wrong while registering the pet.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Register Your Pet</Text>
-      <TextInput label="Pet Name" value={petName} onChangeText={setPetName} style={styles.input} />
-      <TextInput label="Breed" value={breed} onChangeText={setBreed} style={styles.input} />
-      <TextInput label="Age" value={age} onChangeText={setAge} style={styles.input} keyboardType="numeric" />
-      
-      {/* New fields for appointments, medications, vaccinations, and meal plan */}
-      <TextInput label="Appointments (comma separated)" value={appointments} onChangeText={setAppointments} style={styles.input} />
-      <TextInput label="Medications (comma separated)" value={medications} onChangeText={setMedications} style={styles.input} />
-      <TextInput label="Vaccinations (comma separated)" value={vaccinations} onChangeText={setVaccinations} style={styles.input} />
-      <TextInput label="Meal Plan" value={mealPlan} onChangeText={setMealPlan} style={styles.input} />
+  // Navigate to registration screen for a new user
+  const handleNavigateToRegister = () => {
+    navigation.navigate('Signup');
+  };
 
-      <Button mode="contained" onPress={handleRegisterPet} style={styles.button}>Register</Button>
-    </View>
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>Register Your Pet</Text>
+
+      {/* Check if user is logged in */}
+      {!auth.currentUser ? (
+        // New User - Navigate to Register Page
+        <View style={styles.messageContainer}>
+          <Text style={styles.messageText}>Please Sign Up to Register Your Pet</Text>
+          <Button mode="contained" onPress={handleNavigateToRegister} style={styles.navigateButton}>
+            Go to Signup
+          </Button>
+        </View>
+      ) : (
+        // Current User - Show Pet Registration Form
+        <>
+          <TextInput
+            label="Pet Name"
+            value={petName}
+            onChangeText={setPetName}
+            style={styles.input}
+            mode="outlined"
+            placeholder="Enter pet's name"
+          />
+          <TextInput
+            label="Breed"
+            value={breed}
+            onChangeText={setBreed}
+            style={styles.input}
+            mode="outlined"
+            placeholder="Enter breed"
+          />
+          <TextInput
+            label="Age"
+            value={age}
+            onChangeText={setAge}
+            style={styles.input}
+            mode="outlined"
+            keyboardType="numeric"
+            placeholder="Enter pet's age"
+          />
+          <Divider style={styles.divider} />
+
+          <Button
+            mode="contained"
+            onPress={handleRegisterPet}
+            style={styles.submitButton}
+            labelStyle={styles.submitButtonText}
+            loading={loading}
+          >
+            {loading ? "Registering..." : "Register Pet"}
+          </Button>
+        </>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  header: { fontSize: 22, fontWeight: 'bold', marginBottom: 10 },
-  input: { width: '100%', marginBottom: 10 },
-  button: { marginTop: 10, width: '100%' }
+  container: {
+    padding: 20,
+    backgroundColor: '#f4f4f4',
+    marginTop: 50,
+  },
+  header: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+    textAlign: 'center',
+  },
+  input: {
+    marginBottom: 15,
+    backgroundColor: 'white',
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginVertical: 10,
+  },
+  radioContainer: {
+    marginVertical: 15,
+  },
+  radioRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  radioOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  divider: {
+    marginVertical: 20,
+  },
+  submitButton: {
+    marginTop: 30,
+    backgroundColor: '#6200ee', // Purple color
+  },
+  submitButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  messageContainer: {
+    marginTop: 50,
+    alignItems: 'center',
+  },
+  messageText: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 20,
+    color: '#555',
+  },
+  navigateButton: {
+    backgroundColor: '#6200ee', // Purple color
+  },
 });

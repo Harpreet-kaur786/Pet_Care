@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
       padding: 20,
-      //alignItems: 'center'
+      //alignItems: 'center',
+      backgroundColor: '#FFF3E0',
     },
     profileImage: {
       width: 120,

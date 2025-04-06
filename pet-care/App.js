@@ -11,7 +11,7 @@ import SignupScreen from './screens/SignupScreen/SignupScreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import PetSelectionScreen from './screens/PetSelectionScreen/PetSelectionScreen';
-//import VaccinationScreen from './screens/VaccinationScreen/VaccinationScreen';
+import VaccinationScreen from './screens/VaccinationScreen/VaccinationScreen';
 import DietNutritionScreen from './screens/DietNutritionScreen/DietNutritionScreen';
 import WellnessPreventiveScreen from './screens/WellnessPreventionScreen/WellnessPreventionScreen';
 const Stack = createStackNavigator();
@@ -29,7 +29,7 @@ export default function App() {
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="PetSelection" component={PetSelectionScreen} />
                 <Stack.Screen name="PetProfile" component={PetProfileScreen} />
-                {/* <Stack.Screen name="Vaccination" component={VaccinationScreen} /> */}
+                <Stack.Screen name="Vaccination" component={VaccinationScreen} />
                 <Stack.Screen name="DietNutrition" component={DietNutritionScreen} />
                 <Stack.Screen name="WellnessPreventive" component={WellnessPreventiveScreen} />
                 <Stack.Screen name="MealPlan" component={MealPlanScreen}/>
