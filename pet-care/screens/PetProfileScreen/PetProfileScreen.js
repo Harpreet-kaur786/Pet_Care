@@ -23,9 +23,12 @@ import {
 import { db } from "../../firebaseConfig";
 import styles from "./styles";
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
-const PetProfileScreen = ({ navigation,route }) => {
-  const petId = "L441RCz5Z55RXFJpT3gv";
+const PetProfileScreen = ({ navigation }) => {
+  const route = useRoute();
+  const { petId } = route.params;
+  //const petId = "L441RCz5Z55RXFJpT3gv";
   const [pet, setPet] = useState(null);
   const [mealPlan, setMealPlan] = useState(null);
   const [isEditing, setIsEditing] = useState(false);

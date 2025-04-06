@@ -28,7 +28,8 @@ export default function HomeScreen({ navigation }) {
         const pets = [];
         petsSnapshot.forEach(doc => {
           if (doc.data().userId === auth.currentUser.uid) {
-            pets.push(doc.data());
+            //pets.push(doc.data());
+            pets.push({ id: doc.id, ...doc.data() }); 
           }
         });
         setPetData(pets);
