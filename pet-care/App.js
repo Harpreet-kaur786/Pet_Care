@@ -57,6 +57,15 @@ function BottomTabs() {
                     ),
                 }}
             />
+            <Tab.Screen
+                name="DailyMealPlan"
+                component={DailyMealPlanScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="calendar" color={color} size={size} />
+                    ),
+                }}
+            />
         </Tab.Navigator>
     );
 }
@@ -81,6 +90,13 @@ function DrawerNavigator() {
           component={LoginScreen}
           options={{
             drawerLabel: 'Logout',
+            drawerLabel: 'Logout',
+            drawerLabelStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: '#FF5722',
+              alignSelf: 'baseline'
+            },
             drawerIcon: ({ color, size }) => (
               <Icon name="sign-out" color={color} size={size} />
             )

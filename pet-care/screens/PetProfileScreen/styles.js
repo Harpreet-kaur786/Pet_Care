@@ -7,12 +7,10 @@ const styles = StyleSheet.create({
       backgroundColor: '#FFF3E0',
     },
     profileImage: {
-      width: 120,
-      height: 120,
-      borderRadius: 60,
-      marginBottom: 15,
-      alignItems: "center",
-      alignContent: "center",
+      width: 200,
+      height: 200,
+      borderRadius: '100%',  
+      marginVertical: 20,
     },
     align: {
       alignItems: "center",
@@ -147,6 +145,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between", // Adjust spacing
     alignItems: "center",
     marginTop: 10,
+  },
+  gradientContainer: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    padding: 20,
   },
   });
 

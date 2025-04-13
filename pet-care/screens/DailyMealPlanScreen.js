@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, 
 import { db } from '../firebaseConfig';
 import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
 import { Ionicons } from '@expo/vector-icons';  // Importing Ionicons for the Home icon
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
 const DailyMealPlanScreen = ({ route, navigation }) => {
   const { petId, petName } = route.params || {}; // Extract petId and petName safely
   const [mealPlans, setMealPlans] = useState([]);
@@ -57,20 +58,52 @@ const DailyMealPlanScreen = ({ route, navigation }) => {
   // Adding the Home icon to the header on the right side
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home" size={30} color="#33A8FF" style={{ marginRight: 20 }} />
+      title: 'Daily Meal Plan',
+      headerStyle: {
+        backgroundColor: '#FF5722',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 24,
+      },
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
+          <Icon
+            name="bars"
+            size={26}
+            color="#fff"
+          />
         </TouchableOpacity>
       ),
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
+        <Icon
+          name="sign-out"
+          size={26}
+          color="#fff"
+        />
+      </TouchableOpacity>
+      
+      )
     });
   }, [navigation]);
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#45a29e" style={styles.loadingIndicator} />;
+    return (
+      <ActivityIndicator
+        size="large"
+        color="#45a29e"
+        style={styles.loadingIndicator}
+      />
+    );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <LinearGradient
+    colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+    style={styles.gradientContainer} >
+    <SafeAreaView style={styles.scrollContent}>
       <FlatList
         contentContainerStyle={styles.container}
         data={mealPlans}
@@ -113,6 +146,7 @@ const DailyMealPlanScreen = ({ route, navigation }) => {
         }
       />
     </SafeAreaView>
+    </LinearGradient>
   );
 };
 
@@ -207,6 +241,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  gradientContainer: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    padding: 20,
   },
 });
 

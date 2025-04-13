@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const DietNutritionScreen = ({ navigation }) => {
   const [isOverviewVisible, setOverviewVisible] = useState(false);
@@ -9,7 +10,12 @@ const DietNutritionScreen = ({ navigation }) => {
   const [isHowVisible, setHowVisible] = useState(false);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient
+    colors={ ['#FF6F91', '#FF9A8B', '#FDCB82']} // Light peach and pink shades
+
+    style={styles.gradientContainer}
+  >
+    <SafeAreaView style={styles.scrollContent}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         {/* Back Button */}
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -88,6 +94,7 @@ const DietNutritionScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </LinearGradient>
   );
 };
 
@@ -104,6 +111,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderColor: '#DDDDDD',
     borderWidth: 1,
+    resizeMode: 'contain'
   },
   bannerImage: {
     width: '100%',
@@ -167,6 +175,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     textAlign: 'center',
+  },
+  gradientContainer: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    padding: 20,
   },
 });
 

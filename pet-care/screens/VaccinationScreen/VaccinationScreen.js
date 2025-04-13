@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 const VaccinationScreen = ({ navigation }) => {
   const [isOverviewVisible, setOverviewVisible] = useState(false);
   const [isWhyVisible, setWhyVisible] = useState(false);
@@ -8,6 +8,11 @@ const VaccinationScreen = ({ navigation }) => {
   const [isHowVisible, setHowVisible] = useState(false);
 
   return (
+    <LinearGradient
+    colors={ ['#FF6F91', '#FF9A8B', '#FDCB82']} // Light peach and pink shades
+
+    style={styles.gradientContainer}
+  >
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         {/* Back Button */}
@@ -84,6 +89,7 @@ const VaccinationScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </LinearGradient>
   );
 };
 
@@ -163,6 +169,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     textAlign: 'center',
+  },
+  gradientContainer: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    padding: 20,
   },
 });
 

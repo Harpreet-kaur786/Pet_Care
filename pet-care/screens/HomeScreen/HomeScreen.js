@@ -3,9 +3,9 @@ import { View, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity, Modal,
 import { Text, Avatar, Card, IconButton, Button, Divider } from 'react-native-paper';
 import { auth, db, collection, getDocs, signOut } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios';
-import { getCurrentPositionAsync, requestForegroundPermissionsAsync } from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+import { LinearGradient } from 'expo-linear-gradient';
+
+
 
 export default function HomeScreen({ navigation }) {
   const [userData, setUserData] = useState(null);
@@ -107,7 +107,12 @@ useEffect(() => {
 
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <LinearGradient
+  colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+  style={styles.gradientContainer}
+>
+
+    <ScrollView contentContainerStyle={styles.scrollContent}>
       {userData && (
         <View style={styles.headerSection}>
           <Avatar.Text label={userData.name.charAt(0).toUpperCase()} size={60} style={styles.avatar} />
@@ -183,6 +188,8 @@ useEffect(() => {
      
 
     </ScrollView>
+    </LinearGradient>
+
   );
 }
 
@@ -440,8 +447,14 @@ noPetsText: {
   heading: { fontSize: 22, fontWeight: 'bold', padding: 10, textAlign: 'center' },
   map: { flex: 1 },
   button: { margin: 16 },
-  loading: { position: 'absolute', top: '50%', left: '50%', marginLeft: -20, marginTop: -20 }
-
+  loading: { position: 'absolute', top: '50%', left: '50%', marginLeft: -20, marginTop: -20 },
+  gradientContainer: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    padding: 20,
+  },
 });
 
 

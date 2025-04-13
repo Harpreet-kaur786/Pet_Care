@@ -24,8 +24,9 @@ import { db } from "../../firebaseConfig";
 import styles from "./styles";
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
-
-const PetProfileScreen = ({ navigation }) => {
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+const PetProfileScreen = ({ navigation}) => {
   const route = useRoute();
   const { petId } = route.params;
   //const petId = "L441RCz5Z55RXFJpT3gv";
@@ -42,12 +43,54 @@ const PetProfileScreen = ({ navigation }) => {
 //   const [isMedicationModalVisible, setIsMedicationModalVisible] = useState(false);
   const [modalType, setModalType] = useState(null); // 'appointment', 'medication', 'vaccination'
   const [isSaveEnabled, setIsSaveEnabled] = useState(false);
+  const [breed, setBreed] = useState(null);
+  
 
   useEffect(() => {
     fetchPetProfile();
     fetchMealPlan();
-  }, []);
+  }, [petId]);
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Profile ',
+      headerStyle: {
+        backgroundColor: '#FF5722',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 24,
+      },
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
+          <Icon
+            name="bars"
+            size={26}
+            color="#fff"
+          />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
+        <Icon
+          name="sign-out"
+          size={26}
+          color="#fff"
+        />
+      </TouchableOpacity>
+      
+      )
+    });
+  }, [navigation]);
 
+  //pet profile
+  const defaultDogImage = require('../../assets/DogStarted.jpg');
+  const defaultCatImage = require('../../assets/pet3.jpg');
+  
+  // Determine the image based on the breed
+  // Determine the default image based on the breed
+ 
+  
   {/* Fetching the Pet Profile */}
   const fetchPetProfile = async () => {
     try {
@@ -68,6 +111,7 @@ const PetProfileScreen = ({ navigation }) => {
         petData.age = petData.age || 0;
         setPet(petData);
         setUpdatedPet(petData);
+        setBreed(petData.breed);
       } else {
         console.log("Document does not exist!");
         Alert.alert("Error", "Pet not found.");
@@ -77,6 +121,7 @@ const PetProfileScreen = ({ navigation }) => {
       Alert.alert("Error", error.message);
     }
   };
+
 
   {/* Fetching the meal plan */}
   const fetchMealPlan = async () => {
@@ -97,6 +142,23 @@ const PetProfileScreen = ({ navigation }) => {
       Alert.alert("Error", error.message);
     }
   };
+
+  const getBreedImage = (breed) => {
+    if (!breed) return require('../../assets/pet5.jpg'); // Fallback image if breed is undefined
+    const breedLowerCase = breed.toLowerCase(); // Convert breed to lowercase
+    if (breedLowerCase === 'cat') {
+      return defaultCatImage;
+    } else if (breedLowerCase === 'dog') {
+      return defaultDogImage;
+    } else {
+      return require('../../assets/pet5.jpg'); // Fallback image
+    }
+  };
+
+  // Display loading message until pet data is fetched
+  if (!pet) {
+    return <Text>Loading...</Text>;
+  }
 
   const handleUpdate = async () => {
     try {
@@ -204,9 +266,18 @@ const PetProfileScreen = ({ navigation }) => {
 
   if (!pet) return <Text>Loading...</Text>;
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <LinearGradient
+    colors={ ['#FF6F91', '#FF9A8B', '#FDCB82']} // Light peach and pink shades
+
+    style={styles.gradientContainer}
+  >
+    <ScrollView contentContainerStyle={styles.scrollContent}>
       <View style={styles.centeredSection}>
-        <Image source={{ uri: pet.image }} style={styles.profileImage} />
+      <Image
+        source={getBreedImage(breed)}  // Use breed to determine the image
+        style={styles.profileImage}
+         resizeMode="contain"
+      />
         {isEditing ? (
           <TextInput
             style={styles.input}
@@ -527,6 +598,7 @@ const PetProfileScreen = ({ navigation }) => {
         </View>
       </Modal>
     </ScrollView>
+    </LinearGradient>
   );
 };
 

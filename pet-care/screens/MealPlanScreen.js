@@ -14,7 +14,8 @@ import { db } from '../firebaseConfig';
 import { doc, getDoc, collection, addDoc, updateDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
 const MealPlanScreen = ({ route }) => {
   const { petId, mealPlanId } = route.params || {}; // mealPlanId to identify the existing meal plan
   const [mealPlan, setMealPlan] = useState({
@@ -32,6 +33,38 @@ const MealPlanScreen = ({ route }) => {
   const MEAL_TIMES = ['Morning', 'Afternoon', 'Evening'];
   const FOOD_TYPES = ['Wet Food', 'Dry Food', 'Raw Diet', 'Treats'];
   const PORTION_SIZES = ['Small', 'Medium', 'Large'];
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Meal Plan ',
+      headerStyle: {
+        backgroundColor: '#FF5722',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 24,
+      },
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
+          <Icon
+            name="bars"
+            size={26}
+            color="#fff"
+          />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
+        <Icon
+          name="sign-out"
+          size={26}
+          color="#fff"
+        />
+      </TouchableOpacity>
+      
+      )
+    });
+  }, [navigation]);
 
   useEffect(() => {
     const fetchPetDetails = async () => {
@@ -143,9 +176,13 @@ const MealPlanScreen = ({ route }) => {
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
-
+ 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+    colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+    style={styles.gradientContainer}
+  >
+    <View style={styles.scrollContent}>
       <Text style={styles.header}>
         {pet?.petName ? `${pet.petName}'s Meal Plan` : 'Meal Plan'}
       </Text>
@@ -253,6 +290,7 @@ const MealPlanScreen = ({ route }) => {
         </View>
       </ScrollView>
     </View>
+    </LinearGradient>
   );
 };
 
@@ -267,7 +305,7 @@ const styles = StyleSheet.create({
     fontSize: 22, // Reduced the font size of the heading
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#333',
+    color: '#FFFFFF',
     marginVertical: 20,
     textDecorationLine: 'underline',
     fontFamily: 'Arial',
@@ -288,20 +326,21 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 8,
-    color: '#555',
+    color: '#FFFFFF',
     fontWeight: 'bold',
     textTransform: 'uppercase',
     borderBottomWidth: 2,
-    borderBottomColor: '#4CAF50',
+    borderBottomColor: '#E53935',
     paddingBottom: 6,
   },
   textArea: {
     borderWidth: 1,
     height: 80,
-    borderColor: '#ccc',
+    color: '#FFFFF',
+    borderColor: '#E53935',
     padding: 10,
     borderRadius: 8,
-    fontSize: 16,
+    fontSize: 20,
     textAlignVertical: 'top', // Makes the text start from the top of the input
   },
   checklist: {
@@ -320,14 +359,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedItem: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#E53935',
+    color: 'FFFFFF'
   },
   checkItemText: {
     color: '#333',
     marginRight: 5,
+    fontWeight: 'bold'
   },
   saveButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#E53935',
     paddingVertical: 12,
     borderRadius: 8,
     marginTop: 20,
@@ -372,6 +413,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
     marginBottom: 5,
+  },
+  gradientContainer: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    padding: 20,
   },
 });
 
