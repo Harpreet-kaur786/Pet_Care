@@ -9,7 +9,7 @@ export default function PetRegistrationScreen({ navigation }) {
   const [petName, setPetName] = useState('');
   const [breed, setBreed] = useState('');
   const [age, setAge] = useState('');
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false); 
 
   // Registration handler for logged-in users
   const handleRegisterPet = async () => {
