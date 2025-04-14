@@ -20,55 +20,8 @@ import WellnessPreventiveScreen from './screens/WellnessPreventionScreen/Wellnes
 WellnessPreventiveScreen
 
 const Stack = createStackNavigator();
-// const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-// Create Bottom Tabs Navigator
-// function BottomTabs() {
-//     return (
-//         <Tab.Navigator
-//             screenOptions={{
-//                 tabBarActiveTintColor: 'tomato',
-//                 tabBarInactiveTintColor: 'gray',
-//             }}>
-//             <Tab.Screen
-//                 name="Home"
-//                 component={HomeScreen}
-//                 options={{
-//                     tabBarIcon: ({ color, size }) => (
-//                         <Ionicons name="home" color={color} size={size} />
-//                     ),
-//                 }}
-//             />
-//             <Tab.Screen
-//                 name="MealPlan"
-//                 component={MealPlanScreen}
-//                 options={{
-//                     tabBarIcon: ({ color, size }) => (
-//                         <Ionicons name="fast-food" color={color} size={size} />
-//                     ),
-//                 }}
-//             />
-//             <Tab.Screen
-//                 name="Profile"
-//                 component={PetProfileScreen}
-//                 options={{
-//                     tabBarIcon: ({ color, size }) => (
-//                         <Ionicons name="person" color={color} size={size} />
-//                     ),
-//                 }}
-//             />
-//             <Tab.Screen
-//                 name="DailyMealPlan"
-//                 component={DailyMealPlanScreen}
-//                 options={{
-//                     tabBarIcon: ({ color, size }) => (
-//                         <Ionicons name="calendar" color={color} size={size} />
-//                     ),
-//                 }}
-//             />
-//         </Tab.Navigator>
-//     );
-// }
+
 function DrawerNavigator() {
     return (
         <Drawer.Navigator

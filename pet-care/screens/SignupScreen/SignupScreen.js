@@ -136,9 +136,9 @@ export default function SignupScreen({ navigation }) {
             <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
               Already have an account? Log in
             </Text>
-            <Text style={styles.link} onPress={() => navigation.navigate('PetSelection')}>
+            {/* <Text style={styles.link} onPress={() => navigation.navigate('PetSelection')}>
               Want to register another pet? Pet Registration
-            </Text>
+            </Text> */}
           </View>
         </View>
       </View>
