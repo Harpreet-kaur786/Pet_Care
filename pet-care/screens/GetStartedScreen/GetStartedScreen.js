@@ -41,7 +41,7 @@ const GetStartedScreen = () => {
       <View style={styles.lowerContainer}>
         <Text style={styles.title}>Stay Ahead of Your <Text style={styles.highlight}>Pet’s</Text> with Ease!</Text>
         <Text style={styles.subtitle}>Effortlessly track your pet’s health, mood & activity for better care.</Text>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Login")}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Signup")}>
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
