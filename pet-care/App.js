@@ -115,8 +115,7 @@ export default function App() {
                 <Stack.Screen name="Vaccination" component={VaccinationScreen} />
                 <Stack.Screen name="DietNutrition" component={DietNutritionScreen} />
                 <Stack.Screen name="WellnessPreventive" component={WellnessPreventiveScreen} />
-                {/* <Stack.Screen name="MealPlan" component={MealPlanScreen} />
-                <Stack.Screen name="DailyMealPlan" component={DailyMealPlanScreen} /> */}
+
             </Stack.Navigator>
         </NavigationContainer>
     );

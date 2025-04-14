@@ -78,7 +78,7 @@ export default function PetRegistrationScreen({ navigation }) {
             onChangeText={setBreed}
             style={styles.input}
             mode="outlined"
-            placeholder="Enter breed"
+            placeholder="Enter breed as Cat, Dog & others"
           />
           <TextInput
             label="Age"
@@ -87,7 +87,7 @@ export default function PetRegistrationScreen({ navigation }) {
             style={styles.input}
             mode="outlined"
             keyboardType="numeric"
-            placeholder="Enter pet's age"
+            placeholder="Enter pet's age in years"
           />
           <Divider style={styles.divider} />
 

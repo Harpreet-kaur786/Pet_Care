@@ -37,22 +37,13 @@ const MealPlanScreen = ({ route }) => {
     navigation.setOptions({
       title: 'Meal Plan ',
       headerStyle: {
-        backgroundColor: '#FF5722',
+        backgroundColor: '#ff9966',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
         fontSize: 24,
       },
-      // headerLeft: () => (
-      //   <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
-      //     <Icon
-      //       name="bars"
-      //       size={26}
-      //       color="#fff"
-      //     />
-      //   </TouchableOpacity>
-      // ),
       headerRight: () => (
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
         <Icon
@@ -179,7 +170,7 @@ const MealPlanScreen = ({ route }) => {
  
   return (
     <LinearGradient
-    colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+    colors={['#FFc3d4', '#FFCEDC', '#FDCB82']}
     style={styles.gradientContainer}
   >
     <View style={styles.scrollContent}>
@@ -305,7 +296,7 @@ const styles = StyleSheet.create({
     fontSize: 22, // Reduced the font size of the heading
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FFFFFF',
+    color: '#ff6600',
     marginVertical: 20,
     textDecorationLine: 'underline',
     fontFamily: 'Arial',
@@ -326,7 +317,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 8,
-    color: '#FFFFFF',
+    color: '#00b300',
     fontWeight: 'bold',
     textTransform: 'uppercase',
     borderBottomWidth: 2,
@@ -359,7 +350,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedItem: {
-    backgroundColor: '#E53935',
+    backgroundColor: '#ff8c66',
     color: 'FFFFFF'
   },
   checkItemText: {

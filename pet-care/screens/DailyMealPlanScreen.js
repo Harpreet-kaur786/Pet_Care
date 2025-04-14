@@ -60,22 +60,14 @@ const DailyMealPlanScreen = ({ route, navigation }) => {
     navigation.setOptions({
       title: 'Daily Meal Plan',
       headerStyle: {
-        backgroundColor: '#FF5722',
+        backgroundColor: '#ff9966',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
         fontSize: 24,
       },
-      // headerLeft: () => (
-      //   <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
-      //     <Icon
-      //       name="bars"
-      //       size={26}
-      //       color="#fff"
-      //     />
-      //   </TouchableOpacity>
-      // ),
+
       headerRight: () => (
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
         <Icon
@@ -101,8 +93,9 @@ const DailyMealPlanScreen = ({ route, navigation }) => {
 
   return (
     <LinearGradient
-    colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
-    style={styles.gradientContainer} >
+      colors={['#FFc3d4', '#FFCEDC', '#FDCB82']}
+      style={styles.gradientContainer}
+    >
     <SafeAreaView style={styles.scrollContent}>
       <FlatList
         contentContainerStyle={styles.container}
@@ -115,10 +108,31 @@ const DailyMealPlanScreen = ({ route, navigation }) => {
         }
         renderItem={({ item }) => (
           <View style={styles.mealItem}>
-            <Text style={styles.mealTime}>Time: {item.time}</Text>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+                <Ionicons name="timer" size={20} color="#e57373" style={{ marginRight: 6 }} />
+                <Text style={styles.mealTime}>Time: {item.time}</Text>
+          </View>
+
+          {/* Food Type with Icon */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <Ionicons name="fast-food" size={20} color="#e57373" style={{ marginRight: 6 }} />
             <Text style={styles.mealDetails}>Food Type: {item.foodType.join(', ')}</Text>
+          </View>
+
+          {/* Portion Size with Icon */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <Ionicons name="options" size={20} color="#e57373" style={{ marginRight: 6 }} />
             <Text style={styles.mealDetails}>Portion Size: {item.portionSize}</Text>
+          </View>
+
+          {/* Special Notes with Icon */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <Ionicons name="pencil" size={20} color="#e57373" style={{ marginRight: 6 }} />
             <Text style={styles.specialNotes}>Special Notes: {item.specialNotes || 'No notes available'}</Text>
+          </View>
+
+
             {/* Buttons in one row */}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -176,7 +190,7 @@ const styles = StyleSheet.create({
   mealItem: {
     padding: 15,
     marginBottom: 15,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffe6e6',
     borderRadius: 12,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -245,7 +259,6 @@ const styles = StyleSheet.create({
   gradientContainer: {
     flex: 1,
   },
-  
   scrollContent: {
     padding: 20,
   },

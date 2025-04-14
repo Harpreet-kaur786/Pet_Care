@@ -125,7 +125,7 @@ export default function HomeScreen({ navigation }) {
     navigation.setOptions({
       title: "Home",
       headerStyle: {
-        backgroundColor: "#FF5722",
+        backgroundColor: "#ff9966",
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -150,9 +150,11 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <LinearGradient
-      colors={["#FF6F91", "#FF9A8B", "#FDCB82"]}
-      style={styles.gradientContainer}
-    >
+    colors={['#FFE29F', '#FFA99F', '#ffcedc']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={styles.gradientContainer}
+  >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {userData && (
           <View style={styles.headerSection}>

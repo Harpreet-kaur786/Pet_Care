@@ -26,6 +26,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { SafeAreaView } from 'react-native';
+
+
 const PetProfileScreen = ({ navigation}) => {
   const route = useRoute();
   const { petId } = route.params;
@@ -54,22 +57,14 @@ const PetProfileScreen = ({ navigation}) => {
     navigation.setOptions({
       title: 'Profile ',
       headerStyle: {
-        backgroundColor: '#FF5722',
+        backgroundColor: '#ff9966',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
         fontSize: 24,
       },
-      // headerLeft: () => (
-      //   <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
-      //     <Icon
-      //       name="bars"
-      //       size={26}
-      //       color="#fff"
-      //     />
-      //   </TouchableOpacity>
-      // ),
+
       headerRight: () => (
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
         <Icon
@@ -266,9 +261,11 @@ const PetProfileScreen = ({ navigation}) => {
 
   if (!pet) return <Text>Loading...</Text>;
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFCEDC' }}>
     <LinearGradient
-    colors={ ['#FF6F91', '#FF9A8B', '#FDCB82']} // Light peach and pink shades
-
+    colors={['#FFE29F', '#FFA99F', '#ffcedc']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
     style={styles.gradientContainer}
   >
     <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -598,7 +595,8 @@ const PetProfileScreen = ({ navigation}) => {
         </View>
       </Modal>
     </ScrollView>
-    </LinearGradient>
+        </LinearGradient>
+        </SafeAreaView>
   );
 };
 
