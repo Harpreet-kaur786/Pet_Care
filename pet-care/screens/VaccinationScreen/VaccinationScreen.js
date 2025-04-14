@@ -9,9 +9,8 @@ const VaccinationScreen = ({ navigation }) => {
 
   return (
     <LinearGradient
-    colors={ ['#FF6F91', '#FF9A8B', '#FDCB82']} // Light peach and pink shades
-
-    style={styles.gradientContainer}
+    colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+    style={{ flex: 1 }}
   >
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -94,7 +93,7 @@ const VaccinationScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F5F5F5', paddingTop: 20 },
+  container: { flex: 1, paddingTop: 20 },
   scrollViewContainer: {
     padding: 20,
   },

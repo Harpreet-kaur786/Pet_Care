@@ -3,36 +3,29 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text, RadioButton, Divider } from 'react-native-paper';
 import { auth, db, collection, addDoc } from '../../firebaseConfig';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PetRegistrationScreen({ navigation }) {
-  // State hooks for form fields
   const [petName, setPetName] = useState('');
   const [breed, setBreed] = useState('');
   const [age, setAge] = useState('');
   const [loading, setLoading] = useState(false); 
 
-  // Registration handler for logged-in users
   const handleRegisterPet = async () => {
     const user = auth.currentUser;
-
     if (!user) {
       Alert.alert("Not Logged In", "You must be logged in to register a pet.");
       return;
     }
 
     try {
-      // Set loading state to true while registering
       setLoading(true);
-
-      // Add pet to the database under the logged-in user
       await addDoc(collection(db, "pets"), {
         userId: user.uid,
         petName,
         breed,
         age: parseInt(age),
       });
-
-      // Navigate back to the Home screen after successful registration
       Alert.alert("Pet Registered", "Your pet has been successfully registered.");
       navigation.navigate('Home');
     } catch (error) {
@@ -43,74 +36,73 @@ export default function PetRegistrationScreen({ navigation }) {
     }
   };
 
-  // Navigate to registration screen for a new user
   const handleNavigateToRegister = () => {
     navigation.navigate('Signup');
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Register Your Pet</Text>
+    <LinearGradient
+      colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.header}>Register Your Pet</Text>
 
-      {/* Check if user is logged in */}
-      {!auth.currentUser ? (
-        // New User - Navigate to Register Page
-        <View style={styles.messageContainer}>
-          <Text style={styles.messageText}>Please Sign Up to Register Your Pet</Text>
-          <Button mode="contained" onPress={handleNavigateToRegister} style={styles.navigateButton}>
-            Go to Signup
-          </Button>
-        </View>
-      ) : (
-        // Current User - Show Pet Registration Form
-        <>
-          <TextInput
-            label="Pet Name"
-            value={petName}
-            onChangeText={setPetName}
-            style={styles.input}
-            mode="outlined"
-            placeholder="Enter pet's name"
-          />
-          <TextInput
-            label="Breed"
-            value={breed}
-            onChangeText={setBreed}
-            style={styles.input}
-            mode="outlined"
-            placeholder="Enter breed as Cat, Dog & others"
-          />
-          <TextInput
-            label="Age"
-            value={age}
-            onChangeText={setAge}
-            style={styles.input}
-            mode="outlined"
-            keyboardType="numeric"
-            placeholder="Enter pet's age in years"
-          />
-          <Divider style={styles.divider} />
-
-          <Button
-            mode="contained"
-            onPress={handleRegisterPet}
-            style={styles.submitButton}
-            labelStyle={styles.submitButtonText}
-            loading={loading}
-          >
-            {loading ? "Registering..." : "Register Pet"}
-          </Button>
-        </>
-      )}
-    </ScrollView>
+        {!auth.currentUser ? (
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>Please Sign Up to Register Your Pet</Text>
+            <Button mode="contained" onPress={handleNavigateToRegister} style={styles.navigateButton}>
+              Go to Signup
+            </Button>
+          </View>
+        ) : (
+          <>
+            <TextInput
+              label="Pet Name"
+              value={petName}
+              onChangeText={setPetName}
+              style={styles.input}
+              mode="outlined"
+              placeholder="Enter pet's name"
+            />
+            <TextInput
+              label="Breed"
+              value={breed}
+              onChangeText={setBreed}
+              style={styles.input}
+              mode="outlined"
+              placeholder="Enter breed as Cat, Dog & others"
+            />
+            <TextInput
+              label="Age"
+              value={age}
+              onChangeText={setAge}
+              style={styles.input}
+              mode="outlined"
+              keyboardType="numeric"
+              placeholder="Enter pet's age in years"
+            />
+            <Divider style={styles.divider} />
+            <Button
+              mode="contained"
+              onPress={handleRegisterPet}
+              style={styles.submitButton}
+              labelStyle={styles.submitButtonText}
+              loading={loading}
+            >
+              {loading ? "Registering..." : "Register Pet"}
+            </Button>
+          </>
+        )}
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContent: {
+    flexGrow: 1,
     padding: 20,
-    backgroundColor: '#f4f4f4',
-    marginTop: 50,
   },
   header: {
     fontSize: 30,
@@ -123,29 +115,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: 'white',
   },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginVertical: 10,
-  },
-  radioContainer: {
-    marginVertical: 15,
-  },
-  radioRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  radioOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   divider: {
     marginVertical: 20,
   },
   submitButton: {
     marginTop: 30,
-    backgroundColor: '#6200ee', // Purple color
+    backgroundColor: '#6200ee',
   },
   submitButtonText: {
     fontSize: 16,
@@ -162,6 +137,6 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   navigateButton: {
-    backgroundColor: '#6200ee', // Purple color
+    backgroundColor: '#6200ee',
   },
 });

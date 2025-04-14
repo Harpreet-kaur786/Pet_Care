@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const WellnessPreventiveScreen = ({ navigation }) => {
   const [isOverviewVisible, setOverviewVisible] = useState(false);
@@ -9,6 +10,10 @@ const WellnessPreventiveScreen = ({ navigation }) => {
   const [isHowVisible, setHowVisible] = useState(false);
 
   return (
+    <LinearGradient
+    colors={['#FF6F91', '#FF9A8B', '#FDCB82']}
+    style={{ flex: 1 }}
+  >
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         {/* Back Button */}
@@ -79,6 +84,7 @@ const WellnessPreventiveScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </LinearGradient>
   );
 };
 
