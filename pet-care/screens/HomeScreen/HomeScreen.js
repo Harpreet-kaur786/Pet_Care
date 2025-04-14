@@ -19,7 +19,7 @@ import {
   Button,
   Divider,
 } from "react-native-paper";
-import { auth, db, collection, getDocs, signOut } from "../../firebaseConfig";
+import { auth, db, collection, getDocs, signOut, addDoc } from "../../firebaseConfig";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -90,13 +90,35 @@ export default function HomeScreen({ navigation }) {
 
   const toggleModal = () => setIsModalVisible(!isModalVisible);
 
-  const handleFeedbackSubmit = () => {
-    if (feedback) {
-      console.log("Feedback Submitted:", feedback);
+  // const handleFeedbackSubmit = () => {
+  //   if (feedback) {
+  //     console.log("Feedback Submitted:", feedback);
+  //     setFeedback("");
+  //     toggleModal();
+  //   } else {
+  //     alert("Please enter some feedback before submitting!");
+  //   }
+  // };
+
+  const handleFeedbackSubmit = async () => {
+    if (!feedback.trim()) {
+      alert("Please enter some feedback before submitting!");
+      return;
+    }
+  
+    try {
+      await addDoc(collection(db, "feedbacks"), {
+        userId: auth.currentUser?.uid || "anonymous",
+        message: feedback.trim(),
+        timestamp: new Date()
+      });
+  
+      Alert.alert("Thank you!", "Your feedback has been submitted.");
       setFeedback("");
       toggleModal();
-    } else {
-      alert("Please enter some feedback before submitting!");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      Alert.alert("Error", "Failed to submit feedback. Try again later.");
     }
   };
   useEffect(() => {
