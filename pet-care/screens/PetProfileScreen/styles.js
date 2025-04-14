@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     profileImage: {
       width: 200,
       height: 200,
-      borderRadius: '100%',  
+      borderRadius: 100,  
       marginVertical: 20,
     },
     align: {
