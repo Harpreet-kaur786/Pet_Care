@@ -44,15 +44,15 @@ const MealPlanScreen = ({ route }) => {
         fontWeight: 'bold',
         fontSize: 24,
       },
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
-          <Icon
-            name="bars"
-            size={26}
-            color="#fff"
-          />
-        </TouchableOpacity>
-      ),
+      // headerLeft: () => (
+      //   <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
+      //     <Icon
+      //       name="bars"
+      //       size={26}
+      //       color="#fff"
+      //     />
+      //   </TouchableOpacity>
+      // ),
       headerRight: () => (
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginRight: 15 }}>
         <Icon

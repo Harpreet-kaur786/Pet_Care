@@ -20,65 +20,65 @@ import WellnessPreventiveScreen from './screens/WellnessPreventionScreen/Wellnes
 WellnessPreventiveScreen
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 // Create Bottom Tabs Navigator
-function BottomTabs() {
-    return (
-        <Tab.Navigator
-            screenOptions={{
-                tabBarActiveTintColor: 'tomato',
-                tabBarInactiveTintColor: 'gray',
-            }}>
-            <Tab.Screen
-                name="Home"
-                component={HomeScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="MealPlan"
-                component={MealPlanScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="fast-food" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Profile"
-                component={PetProfileScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="DailyMealPlan"
-                component={DailyMealPlanScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="calendar" color={color} size={size} />
-                    ),
-                }}
-            />
-        </Tab.Navigator>
-    );
-}
+// function BottomTabs() {
+//     return (
+//         <Tab.Navigator
+//             screenOptions={{
+//                 tabBarActiveTintColor: 'tomato',
+//                 tabBarInactiveTintColor: 'gray',
+//             }}>
+//             <Tab.Screen
+//                 name="Home"
+//                 component={HomeScreen}
+//                 options={{
+//                     tabBarIcon: ({ color, size }) => (
+//                         <Ionicons name="home" color={color} size={size} />
+//                     ),
+//                 }}
+//             />
+//             <Tab.Screen
+//                 name="MealPlan"
+//                 component={MealPlanScreen}
+//                 options={{
+//                     tabBarIcon: ({ color, size }) => (
+//                         <Ionicons name="fast-food" color={color} size={size} />
+//                     ),
+//                 }}
+//             />
+//             <Tab.Screen
+//                 name="Profile"
+//                 component={PetProfileScreen}
+//                 options={{
+//                     tabBarIcon: ({ color, size }) => (
+//                         <Ionicons name="person" color={color} size={size} />
+//                     ),
+//                 }}
+//             />
+//             <Tab.Screen
+//                 name="DailyMealPlan"
+//                 component={DailyMealPlanScreen}
+//                 options={{
+//                     tabBarIcon: ({ color, size }) => (
+//                         <Ionicons name="calendar" color={color} size={size} />
+//                     ),
+//                 }}
+//             />
+//         </Tab.Navigator>
+//     );
+// }
 function DrawerNavigator() {
     return (
         <Drawer.Navigator
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
           drawerActiveTintColor: '#FF5722',
           drawerLabelStyle: { fontSize: 18 },
         }}
       >
-        <Drawer.Screen name="Home" component={BottomTabs} />
+        <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Vaccination" component={VaccinationScreen} />
         <Drawer.Screen name="DietNutrition" component={DietNutritionScreen} />
         <Drawer.Screen name="WellnessPreventive" component={WellnessPreventiveScreen} />
@@ -126,12 +126,44 @@ export default function App() {
                 
                 {/* Other screens */}
                 <Stack.Screen name="PetSelection" component={PetSelectionScreen} />
-                <Stack.Screen name="PetProfile" component={PetProfileScreen} />
+                <Stack.Screen
+  name="PetProfile"
+  component={PetProfileScreen}
+  options={{
+    headerShown: true,
+    title: 'Pet Profile',
+    headerStyle: { backgroundColor: '#FF5722' },
+    headerTintColor: '#fff',
+  }}
+/>
+
+<Stack.Screen
+  name="MealPlan"
+  component={MealPlanScreen}
+  options={{
+    headerShown: true,
+    title: 'Meal Plan',
+    headerStyle: { backgroundColor: '#FF5722' },
+    headerTintColor: '#fff',
+  }}
+/>
+
+<Stack.Screen
+  name="DailyMealPlan"
+  component={DailyMealPlanScreen}
+  options={{
+    headerShown: true,
+    title: 'Daily Meal Plan',
+    headerStyle: { backgroundColor: '#FF5722' },
+    headerTintColor: '#fff',
+  }}
+/>
+
                 <Stack.Screen name="Vaccination" component={VaccinationScreen} />
                 <Stack.Screen name="DietNutrition" component={DietNutritionScreen} />
                 <Stack.Screen name="WellnessPreventive" component={WellnessPreventiveScreen} />
-                <Stack.Screen name="MealPlan" component={MealPlanScreen} />
-                <Stack.Screen name="DailyMealPlan" component={DailyMealPlanScreen} />
+                {/* <Stack.Screen name="MealPlan" component={MealPlanScreen} />
+                <Stack.Screen name="DailyMealPlan" component={DailyMealPlanScreen} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );
